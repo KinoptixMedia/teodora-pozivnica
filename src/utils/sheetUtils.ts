@@ -4,8 +4,8 @@ interface RsvpData {
   lastName: string;
   email: string;
   attending: string;
-  guestFirstName?: string;
-  guestLastName?: string;
+  guestCount: string;
+  guestsInfo: string;
   message?: string;
 }
 

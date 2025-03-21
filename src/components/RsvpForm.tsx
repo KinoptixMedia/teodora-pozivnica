@@ -3,60 +3,36 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from '@/components/ui/radio-group';
+import { Form } from '@/components/ui/form';
 import { toast } from 'sonner';
 import { submitRsvpToGoogleSheet } from '../utils/sheetUtils';
-
-const formSchema = z.object({
-  firstName: z.string().min(2, { message: 'Unesite vaše ime' }),
-  lastName: z.string().min(2, { message: 'Unesite vaše prezime' }),
-  email: z.string().email({ message: 'Unesite važeću email adresu' }),
-  attending: z.enum(['yes', 'no'], {
-    required_error: 'Molimo odaberite da li dolazite',
-  }),
-  bringingGuest: z.enum(['yes', 'no']).optional(),
-  guestFirstName: z.string().optional(),
-  guestLastName: z.string().optional(),
-  message: z.string().optional(),
-});
+import { rsvpFormSchema, type RsvpFormValues } from '@/schemas/rsvpSchema';
+import PersonalFields from './rsvp/PersonalFields';
+import GuestFields from './rsvp/GuestFields';
+import EmailField from './rsvp/EmailField';
+import MessageField from './rsvp/MessageField';
 
 const RsvpForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<RsvpFormValues>({
+    resolver: zodResolver(rsvpFormSchema),
     defaultValues: {
       firstName: '',
       lastName: '',
       email: '',
       attending: 'yes',
-      bringingGuest: 'no',
-      guestFirstName: '',
-      guestLastName: '',
+      guestCount: '0',
+      guestsInfo: '',
       message: '',
     },
   });
 
   const attending = form.watch('attending');
-  const bringingGuest = form.watch('bringingGuest');
+  const guestCount = form.watch('guestCount');
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: RsvpFormValues) {
     setIsSubmitting(true);
     
     try {
@@ -66,8 +42,8 @@ const RsvpForm: React.FC = () => {
         lastName: values.lastName,
         email: values.email,
         attending: values.attending === 'yes' ? 'Da' : 'Ne',
-        guestFirstName: values.guestFirstName || '',
-        guestLastName: values.guestLastName || '',
+        guestCount: values.guestCount || '0',
+        guestsInfo: values.guestsInfo || '',
         message: values.message || ''
       };
       
@@ -112,172 +88,13 @@ const RsvpForm: React.FC = () => {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormField
-              control={form.control}
-              name="firstName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-minnie-black">Ime</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Vaše ime" {...field} className="focus-visible:ring-minnie-roseDark" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-minnie-black">Prezime</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Vaše prezime" {...field} className="focus-visible:ring-minnie-roseDark" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-minnie-black">Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="vasa.adresa@email.com" {...field} className="focus-visible:ring-minnie-roseDark" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="attending"
-            render={({ field }) => (
-              <FormItem className="space-y-2">
-                <FormLabel className="text-minnie-black">Da li dolazite?</FormLabel>
-                <FormControl>
-                  <RadioGroup
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    className="flex space-x-4"
-                  >
-                    <FormItem className="flex items-center space-x-2 space-y-0">
-                      <FormControl>
-                        <RadioGroupItem value="yes" className="text-minnie-roseDark focus:ring-minnie-roseDark" />
-                      </FormControl>
-                      <FormLabel className="text-minnie-black font-normal cursor-pointer">
-                        Da, doći ću!
-                      </FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center space-x-2 space-y-0">
-                      <FormControl>
-                        <RadioGroupItem value="no" className="text-minnie-roseDark focus:ring-minnie-roseDark" />
-                      </FormControl>
-                      <FormLabel className="text-minnie-black font-normal cursor-pointer">
-                        Nažalost, ne mogu
-                      </FormLabel>
-                    </FormItem>
-                  </RadioGroup>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {attending === 'yes' && (
-            <FormField
-              control={form.control}
-              name="bringingGuest"
-              render={({ field }) => (
-                <FormItem className="space-y-2">
-                  <FormLabel className="text-minnie-black">Da li dolazite sa gostom?</FormLabel>
-                  <FormControl>
-                    <RadioGroup
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      className="flex space-x-4"
-                    >
-                      <FormItem className="flex items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="yes" className="text-minnie-roseDark focus:ring-minnie-roseDark" />
-                        </FormControl>
-                        <FormLabel className="text-minnie-black font-normal cursor-pointer">
-                          Da
-                        </FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="no" className="text-minnie-roseDark focus:ring-minnie-roseDark" />
-                        </FormControl>
-                        <FormLabel className="text-minnie-black font-normal cursor-pointer">
-                          Samo ja
-                        </FormLabel>
-                      </FormItem>
-                    </RadioGroup>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          )}
-
-          {attending === 'yes' && bringingGuest === 'yes' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="guestFirstName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-minnie-black">Ime gosta</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Ime gosta" {...field} className="focus-visible:ring-minnie-roseDark" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="guestLastName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-minnie-black">Prezime gosta</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Prezime gosta" {...field} className="focus-visible:ring-minnie-roseDark" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          )}
-
-          <FormField
-            control={form.control}
-            name="message"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-minnie-black">Poruka (opciono)</FormLabel>
-                <FormControl>
-                  <Textarea 
-                    placeholder="Ostavite specijalnu poruku ili posebne zahteve" 
-                    {...field} 
-                    className="focus-visible:ring-minnie-roseDark resize-none"
-                    rows={3}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <PersonalFields form={form} />
+          
+          <EmailField form={form} />
+          
+          <GuestFields form={form} attending={attending} guestCount={guestCount} />
+          
+          <MessageField form={form} />
 
           <div className="text-center">
             <Button 
