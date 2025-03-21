@@ -16,14 +16,15 @@ export const submitRsvpToGoogleSheet = async (data: RsvpData): Promise<boolean> 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
-        // Ako Sheety zahtjeva autentikaciju, dodaj ovdje npr. 'Authorization': 'Bearer YOUR_API_KEY'
+        // Ako je potrebna autentikacija, dodaj ovdje npr. 'Authorization': 'Bearer YOUR_API_KEY'
       },
-      // U ovoj strukturi, 'rsvp' je ključ u kojem se nalaze podaci.
-      body: JSON.stringify({ rsvp: data })
+      // Ključ treba odgovarati imenu resursa u Sheety-ju (u ovom slučaju "лист1")
+      body: JSON.stringify({ лист1: data })
     });
 
     if (!response.ok) {
-      throw new Error('Failed to submit RSVP');
+      const errorData = await response.text();
+      throw new Error(`Failed to submit RSVP: ${response.status} ${errorData}`);
     }
 
     return true;
