@@ -9,7 +9,7 @@ interface RsvpData {
 
 export const submitRsvpToGoogleSheet = async (data: RsvpData): Promise<boolean> => {
   try {
-    const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbziSTLjXKlT_FecbW-1ucZTED62zqRAmvNrabZG-vRm9kCS0-h49rJoy1v6qiCcgt0K/exec';
+    const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwiibjENr8r5bqoelaAAdtfgSHGyaNl-Z778R63xZ5cdxyK-1dmghCE6YeOrRX9Pimw/exec';
 
     const response = await fetch(APPS_SCRIPT_ENDPOINT, {
       method: 'POST',
