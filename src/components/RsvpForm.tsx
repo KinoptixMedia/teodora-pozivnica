@@ -33,29 +33,32 @@ const RsvpForm: React.FC = () => {
     setIsSubmitting(true);
     
     try {
+      // Format the data for Google Sheets
       const rsvpData = {
-        firstName: values.firstName.trim(),
-        lastName: values.lastName.trim(),
+        firstName: values.firstName,
+        lastName: values.lastName,
         attending: values.attending === 'yes' ? 'Da' : 'Ne',
         guestCount: values.guestCount || '0',
-        guestsInfo: values.guestsInfo?.trim() || '',
-        message: values.message?.trim() || ''
+        guestsInfo: values.guestsInfo || '',
+        message: values.message || ''
       };
-
-      console.log('Submitting RSVP:', rsvpData);
-
+      
+      // Submit to Google Sheets
       const success = await submitRsvpToGoogleSheet(rsvpData);
       
       if (success) {
-        toast.success('Hvala na odgovoru! 🎉', {
-          description: 'Vaša potvrda je uspešno poslata!',
+        toast.success('Hvala na odgovoru!', {
+          description: `Vaša potvrda je primljena i jedva čekamo da proslavimo sa vama!`,
         });
         form.reset();
+      } else {
+        toast.error('Greška', {
+          description: 'Došlo je do greške pri slanju. Molimo pokušajte ponovo.',
+        });
       }
     } catch (error) {
-      console.error('Submission Error:', error);
-      toast.error('Ups! Greška', {
-        description: error instanceof Error ? error.message : 'Došlo je do neočekivane greške',
+      toast.error('Greška', {
+        description: 'Došlo je do greške pri slanju. Molimo pokušajte ponovo.',
       });
     } finally {
       setIsSubmitting(false);
@@ -71,7 +74,7 @@ const RsvpForm: React.FC = () => {
     >
       <div className="text-center mb-6">
         <h2 className="font-playfair text-2xl md:text-3xl text-minnie-black mb-1">
-          Potvrdite prisustvo
+          RSVP
         </h2>
         <div className="h-0.5 w-14 bg-minnie-roseDark mx-auto my-3 rounded-full" />
         <p className="text-minnie-black text-sm md:text-base">
@@ -82,7 +85,9 @@ const RsvpForm: React.FC = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <PersonalFields form={form} />
+          
           <GuestFields form={form} attending={attending} guestCount={guestCount} />
+          
           <MessageField form={form} />
 
           <div className="text-center">
@@ -91,7 +96,7 @@ const RsvpForm: React.FC = () => {
               disabled={isSubmitting}
               className="bg-minnie-roseDark hover:bg-minnie-rose text-white font-medium px-8 py-2.5 rounded-full transition-all duration-300 hover:shadow-md"
             >
-              {isSubmitting ? 'Slanje...' : 'Pošalji odgovor'}
+              {isSubmitting ? 'Slanje...' : 'Pošalji RSVP'}
             </Button>
           </div>
         </form>
