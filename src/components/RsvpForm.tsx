@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
@@ -34,32 +33,29 @@ const RsvpForm: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Format the data for Google Sheets
       const rsvpData = {
-        firstName: values.firstName,
-        lastName: values.lastName,
+        firstName: values.firstName.trim(),
+        lastName: values.lastName.trim(),
         attending: values.attending === 'yes' ? 'Da' : 'Ne',
         guestCount: values.guestCount || '0',
-        guestsInfo: values.guestsInfo || '',
-        message: values.message || ''
+        guestsInfo: values.guestsInfo?.trim() || '',
+        message: values.message?.trim() || ''
       };
-      
-      // Submit to Google Sheets
+
+      console.log('Submitting RSVP:', rsvpData);
+
       const success = await submitRsvpToGoogleSheet(rsvpData);
       
       if (success) {
-        toast.success('Hvala na odgovoru!', {
-          description: `Vaša potvrda je primljena i jedva čekamo da proslavimo sa vama!`,
+        toast.success('Hvala na odgovoru! 🎉', {
+          description: 'Vaša potvrda je uspešno poslata!',
         });
         form.reset();
-      } else {
-        toast.error('Greška', {
-          description: 'Došlo je do greške pri slanju. Molimo pokušajte ponovo.',
-        });
       }
     } catch (error) {
-      toast.error('Greška', {
-        description: 'Došlo je do greške pri slanju. Molimo pokušajte ponovo.',
+      console.error('Submission Error:', error);
+      toast.error('Ups! Greška', {
+        description: error instanceof Error ? error.message : 'Došlo je do neočekivane greške',
       });
     } finally {
       setIsSubmitting(false);
@@ -86,9 +82,7 @@ const RsvpForm: React.FC = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <PersonalFields form={form} />
-          
           <GuestFields form={form} attending={attending} guestCount={guestCount} />
-          
           <MessageField form={form} />
 
           <div className="text-center">
@@ -97,7 +91,7 @@ const RsvpForm: React.FC = () => {
               disabled={isSubmitting}
               className="bg-minnie-roseDark hover:bg-minnie-rose text-white font-medium px-8 py-2.5 rounded-full transition-all duration-300 hover:shadow-md"
             >
-              {isSubmitting ? 'Slanje...' : 'Pošalji RSVP'}
+              {isSubmitting ? 'Slanje...' : 'Pošalji odgovor'}
             </Button>
           </div>
         </form>
