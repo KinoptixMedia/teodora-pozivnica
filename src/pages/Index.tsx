@@ -8,10 +8,10 @@ import RsvpForm from '@/components/RsvpForm';
 import AnimatedMinnie from '@/components/AnimatedMinnie';
 
 // Set this to your actual event date
-const eventDate = new Date('2024-12-15T14:00:00');
+const eventDate = new Date('2025-05-10T13:00:00');
 const childName = "Teodora";
-const location = "Magical Garden Party Venue";
-const address = "123 Celebration Lane, Wonderland";
+const location = "Živkin restoran";
+const address = "Maršala Tita 12, Dobanovci";
 
 const Index = () => {
   return (
@@ -61,8 +61,8 @@ const Index = () => {
           transition={{ duration: 0.5, delay: 1 }}
           className="text-center mt-16 text-minnie-black text-sm opacity-80"
         >
-          <p className="mb-1">We can't wait to celebrate with you!</p>
-          <p className="font-dancing text-minnie-roseDark text-lg">With love, The {childName} Family</p>
+          <p className="mb-1">Nadamo se da ćemo se videti!</p>
+          <p className="font-dancing text-minnie-roseDark text-lg">S' ljubavlju, {childName}</p>
         </motion.footer>
       </div>
     </div>
