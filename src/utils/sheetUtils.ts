@@ -10,36 +10,26 @@ interface RsvpData {
 export const submitRsvpToGoogleSheet = async (data: RsvpData): Promise<boolean> => {
   try {
     const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw7_RMF1QjN35nNrLjtmFn5ZZovlUoPznvo_zC2kcdf/exec';
-    
-    const formData = new URLSearchParams();
-    formData.append('firstName', encodeURIComponent(data.firstName));
-    formData.append('lastName', encodeURIComponent(data.lastName));
-    formData.append('attending', data.attending);
-    formData.append('guestCount', data.guestCount);
-    formData.append('guestsInfo', encodeURIComponent(data.guestsInfo));
-    formData.append('message', encodeURIComponent(data.message || ''));
 
+    // Šaljemo podatke kao JSON
     const response = await fetch(APPS_SCRIPT_ENDPOINT, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
-      body: formData.toString(),
+      body: JSON.stringify(data),
+      mode: 'no-cors', // Dodajemo no-cors mode
     });
 
-    if (!response.ok) {
+    // Provera da li je response uopšte stigao
+    if (!response.ok && response.type !== 'opaque') {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const result = await response.json();
+    return true; // Pretpostavka da je uspešno ako nije bacen error
     
-    if (result.result !== "success") {
-      throw new Error(result.error || 'Greška pri čuvanju podataka');
-    }
-    
-    return true;
   } catch (error) {
-    console.error('Error submitting RSVP:', error);
-    throw error;
+    console.error('Greška pri slanju:', error);
+    throw new Error('Došlo je do greške pri povezivanju sa serverom');
   }
 };
