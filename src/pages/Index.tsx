@@ -9,7 +9,7 @@ import AnimatedMinnie from '@/components/AnimatedMinnie';
 
 // Set this to your actual event date
 const eventDate = new Date('2024-12-15T14:00:00');
-const childName = "Emma";
+const childName = "Teodora";
 const location = "Magical Garden Party Venue";
 const address = "123 Celebration Lane, Wonderland";
 

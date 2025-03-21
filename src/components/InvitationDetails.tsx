@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, MapPin } from 'lucide-react';
+import { Calendar, Clock, MapPin, Church } from 'lucide-react';
 import { formatDate, formatTime } from '../utils/dateUtils';
 
 interface InvitationDetailsProps {
@@ -49,7 +49,7 @@ const InvitationDetails: React.FC<InvitationDetailsProps> = ({
       
       <motion.div variants={item} className="my-1">
         <span className="text-sm uppercase tracking-widest text-minnie-black font-medium bg-minnie-roseLight py-1 px-3 rounded-full">
-          Special Celebration
+          Baptism & Birthday Celebration
         </span>
       </motion.div>
       
@@ -64,13 +64,13 @@ const InvitationDetails: React.FC<InvitationDetailsProps> = ({
         variants={item}
         className="text-minnie-black my-6 leading-relaxed max-w-xl mx-auto"
       >
-        Please join us for a magical day filled with joy, laughter, and Minnie Mouse fun as we celebrate 
-        our little one's special milestone!
+        Please join us for a blessed day of baptism followed by a magical birthday celebration filled with joy, 
+        laughter, and Minnie Mouse fun as we celebrate our little one's special milestone!
       </motion.p>
       
       <motion.div 
         variants={item} 
-        className="glass-effect rounded-2xl p-6 mt-8 grid gap-4 md:grid-cols-3"
+        className="glass-effect rounded-2xl p-6 mt-8 grid gap-4"
       >
         <DetailItem 
           icon={<Calendar className="w-5 h-5 text-minnie-roseDark" />}
@@ -78,22 +78,37 @@ const InvitationDetails: React.FC<InvitationDetailsProps> = ({
           content={formatDate(eventDate)}
         />
         
-        <DetailItem 
-          icon={<Clock className="w-5 h-5 text-minnie-roseDark" />}
-          title="Time"
-          content={formatTime(eventDate)}
-        />
-        
-        <DetailItem 
-          icon={<MapPin className="w-5 h-5 text-minnie-roseDark" />}
-          title="Location"
-          content={
-            <>
-              <div>{location}</div>
-              <div className="text-xs mt-1 opacity-80">{address}</div>
-            </>
-          }
-        />
+        <div className="grid md:grid-cols-2 gap-4 mt-4">
+          <DetailItem 
+            icon={<Church className="w-5 h-5 text-minnie-roseDark" />}
+            title="Baptism"
+            content={
+              <>
+                <div className="flex items-center justify-center gap-2 mb-1">
+                  <Clock className="w-4 h-4 text-minnie-roseDark" />
+                  <span>{formatTime(new Date(eventDate.getTime() - 3 * 60 * 60 * 1000))}</span>
+                </div>
+                <div>Holy Church</div>
+                <div className="text-xs mt-1 opacity-80">123 Faith Avenue, Wonderland</div>
+              </>
+            }
+          />
+          
+          <DetailItem 
+            icon={<MapPin className="w-5 h-5 text-minnie-roseDark" />}
+            title="Birthday Party"
+            content={
+              <>
+                <div className="flex items-center justify-center gap-2 mb-1">
+                  <Clock className="w-4 h-4 text-minnie-roseDark" />
+                  <span>{formatTime(eventDate)}</span>
+                </div>
+                <div>{location}</div>
+                <div className="text-xs mt-1 opacity-80">{address}</div>
+              </>
+            }
+          />
+        </div>
       </motion.div>
     </motion.div>
   );
