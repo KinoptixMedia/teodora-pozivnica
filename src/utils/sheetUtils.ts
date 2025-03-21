@@ -9,7 +9,7 @@ interface RsvpData {
 
 export const submitRsvpToGoogleSheet = async (data: RsvpData): Promise<boolean> => {
   try {
-    const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyfB2O8n63sgOqBn92ty_la_-gEOzTpttowJmX6_MqhTmL1Pn1OJOxkz0zD4wRbzmU4/exec'; // Vaš URL
+    const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwiibjENr8r5bqoelaAAdtfgSHGyaNl-Z778R63xZ5cdxyK-1dmghCE6YeOrRX9Pimw/exec'; // Vaš URL
 
     const response = await fetch(APPS_SCRIPT_ENDPOINT, {
       method: 'POST', // OBAVEZNO navodnici!
