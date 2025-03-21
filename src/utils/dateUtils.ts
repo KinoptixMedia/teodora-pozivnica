@@ -25,7 +25,7 @@ export const calculateTimeLeft = (eventDate: Date): {
 };
 
 export const formatDate = (date: Date): string => {
-  return date.toLocaleDateString('en-US', {
+  return date.toLocaleDateString('sr-RS', {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
@@ -34,9 +34,9 @@ export const formatDate = (date: Date): string => {
 };
 
 export const formatTime = (date: Date): string => {
-  return date.toLocaleTimeString('en-US', {
+  return date.toLocaleTimeString('sr-RS', {
     hour: '2-digit',
     minute: '2-digit',
-    hour12: true
+    hour12: false
   });
 };
