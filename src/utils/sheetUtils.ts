@@ -10,20 +10,22 @@ interface RsvpData {
 
 export const submitRsvpToGoogleSheet = async (data: RsvpData): Promise<boolean> => {
   try {
-    const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxfVfITYkZr4UiyD6th9GYGqz-VDYKPvGrGfX3IjkHKgt0tgU7oBUQrqu0VUcDf9a7ZuQ/exec';
+    // Koristi tvoj Google Apps Script URL
+    const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxz-igjjX8Y14W2kXk7ci9Rl3hOaQbirwOS0YWFRHs5aV2ttsSVbT1uvdwDUpvc8GC78w/exec';
     
     const response = await fetch(APPS_SCRIPT_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
+      // Podaci se šalju kao JSON
       body: JSON.stringify(data)
     });
 
     const result = await response.json();
     
     if (result.result !== "success") {
-      console.error("Response error:", result.error);
+      console.error("Greška pri unosu:", result.error);
       throw new Error(result.error || 'Failed to submit RSVP');
     }
     
