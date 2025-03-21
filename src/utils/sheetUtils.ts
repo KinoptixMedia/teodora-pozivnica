@@ -9,16 +9,14 @@ interface RsvpData {
 
 export const submitRsvpToGoogleSheet = async (data: RsvpData): Promise<boolean> => {
   try {
-    // Koristi tvoj Google Apps Script URL
-    const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyfB2O8n63sgOqBn92ty_la_-gEOzTpttowJmX6_MqhTmL1Pn1OJOxkz0zD4wRbzmU4/exec';
-    
+    const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyfB2O8n63sgOqBn92ty_la_-gEOzTpttowJmX6_MqhTmL1Pn1OJOxkz0zD4wRbzmU4/exec'; // Vaš URL
+
     const response = await fetch(APPS_SCRIPT_ENDPOINT, {
-      method: 'POST',
+      method: 'POST', // OBAVEZNO navodnici!
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      // Podaci se šalju kao JSON
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
 
     const result = await response.json();
