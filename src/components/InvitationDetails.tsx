@@ -44,12 +44,12 @@ const InvitationDetails: React.FC<InvitationDetailsProps> = ({
         variants={item}
         className="invitation-text text-3xl md:text-4xl text-minnie-roseDark mb-2"
       >
-        You're Invited!
+        Pozivam te na svoje krštenje i prvi rođendan!
       </motion.h2>
       
       <motion.div variants={item} className="my-1">
         <span className="text-sm uppercase tracking-widest text-minnie-black font-medium bg-minnie-roseLight py-1 px-3 rounded-full">
-          Baptism & Birthday Celebration
+          10. maja biće divan dan
         </span>
       </motion.div>
       
@@ -57,15 +57,14 @@ const InvitationDetails: React.FC<InvitationDetailsProps> = ({
         variants={item} 
         className="font-playfair text-2xl md:text-3xl text-minnie-black font-bold mt-4"
       >
-        {childName} is turning <span className="text-minnie-roseDark">ONE</span>!
+        {childName} slavi <span className="text-minnie-roseDark">ONE</span> rođendan!
       </motion.h3>
       
       <motion.p 
         variants={item}
         className="text-minnie-black my-6 leading-relaxed max-w-xl mx-auto"
       >
-        Please join us for a blessed day of baptism followed by a magical birthday celebration filled with joy, 
-        laughter, and Minnie Mouse fun as we celebrate our little one's special milestone!
+        Igraćemo se i pevaćemo dok se mrak ne spusti, kući ćete ići kad vas Teodora pusti!
       </motion.p>
       
       <motion.div 
@@ -74,29 +73,29 @@ const InvitationDetails: React.FC<InvitationDetailsProps> = ({
       >
         <DetailItem 
           icon={<Calendar className="w-5 h-5 text-minnie-roseDark" />}
-          title="Date"
+          title="Datum"
           content={formatDate(eventDate)}
         />
         
         <div className="grid md:grid-cols-2 gap-4 mt-4">
           <DetailItem 
             icon={<Church className="w-5 h-5 text-minnie-roseDark" />}
-            title="Baptism"
+            title="Krštenje"
             content={
               <>
                 <div className="flex items-center justify-center gap-2 mb-1">
                   <Clock className="w-4 h-4 text-minnie-roseDark" />
-                  <span>{formatTime(new Date(eventDate.getTime() - 3 * 60 * 60 * 1000))}</span>
+                  <span>{formatTime(new Date(eventDate.getTime() - 1 * 60 * 60 * 1000))}</span>
                 </div>
-                <div>Holy Church</div>
-                <div className="text-xs mt-1 opacity-80">123 Faith Avenue, Wonderland</div>
+                <div>Crkva Svetog Nikole</div>
+                <div className="text-xs mt-1 opacity-80">Ugrinovačka 2, Dobanovci</div>
               </>
             }
           />
           
           <DetailItem 
             icon={<MapPin className="w-5 h-5 text-minnie-roseDark" />}
-            title="Birthday Party"
+            title="Restoran"
             content={
               <>
                 <div className="flex items-center justify-center gap-2 mb-1">
