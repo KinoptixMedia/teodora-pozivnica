@@ -1,4 +1,3 @@
-
 interface RsvpData {
   firstName: string;
   lastName: string;
@@ -10,28 +9,37 @@ interface RsvpData {
 
 export const submitRsvpToGoogleSheet = async (data: RsvpData): Promise<boolean> => {
   try {
-    // Koristi tvoj Google Apps Script URL
-    const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxz-igjjX8Y14W2kXk7ci9Rl3hOaQbirwOS0YWFRHs5aV2ttsSVbT1uvdwDUpvc8GC78w/exec';
+    const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw7_RMF1QjN35nNrLjtmFn5ZZovlUoPznvo_zC2kcdf/exec';
     
+    const formData = new URLSearchParams();
+    formData.append('firstName', encodeURIComponent(data.firstName));
+    formData.append('lastName', encodeURIComponent(data.lastName));
+    formData.append('attending', data.attending);
+    formData.append('guestCount', data.guestCount);
+    formData.append('guestsInfo', encodeURIComponent(data.guestsInfo));
+    formData.append('message', encodeURIComponent(data.message || ''));
+
     const response = await fetch(APPS_SCRIPT_ENDPOINT, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      // Podaci se šalju kao JSON
-      body: JSON.stringify(data)
+      body: formData.toString(),
     });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
     const result = await response.json();
     
     if (result.result !== "success") {
-      console.error("Greška pri unosu:", result.error);
-      throw new Error(result.error || 'Failed to submit RSVP');
+      throw new Error(result.error || 'Greška pri čuvanju podataka');
     }
     
     return true;
   } catch (error) {
     console.error('Error submitting RSVP:', error);
-    return false;
+    throw error;
   }
 };
