@@ -44,17 +44,17 @@ const Countdown: React.FC<CountdownProps> = ({ eventDate }) => {
         variants={item}
         className="text-center font-playfair text-2xl md:text-3xl text-minnie-black mb-6"
       >
-        <span className="text-minnie-roseDark">Countdown</span> to the Party
+        <span className="text-minnie-roseDark">Odbrojavanje</span> do žurke
       </motion.h2>
       
       <motion.div 
         variants={item}
         className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center"
       >
-        <CountdownUnit value={timeLeft.days} label="Days" />
-        <CountdownUnit value={timeLeft.hours} label="Hours" />
-        <CountdownUnit value={timeLeft.minutes} label="Minutes" />
-        <CountdownUnit value={timeLeft.seconds} label="Seconds" />
+        <CountdownUnit value={timeLeft.days} label="Dana" />
+        <CountdownUnit value={timeLeft.hours} label="Sati" />
+        <CountdownUnit value={timeLeft.minutes} label="Minuta" />
+        <CountdownUnit value={timeLeft.seconds} label="Sekunde" />
       </motion.div>
     </motion.div>
   );
