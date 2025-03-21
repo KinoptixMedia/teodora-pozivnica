@@ -10,7 +10,6 @@ import { submitRsvpToGoogleSheet } from '../utils/sheetUtils';
 import { rsvpFormSchema, type RsvpFormValues } from '@/schemas/rsvpSchema';
 import PersonalFields from './rsvp/PersonalFields';
 import GuestFields from './rsvp/GuestFields';
-import EmailField from './rsvp/EmailField';
 import MessageField from './rsvp/MessageField';
 
 const RsvpForm: React.FC = () => {
@@ -21,7 +20,6 @@ const RsvpForm: React.FC = () => {
     defaultValues: {
       firstName: '',
       lastName: '',
-      email: '',
       attending: 'yes',
       guestCount: '0',
       guestsInfo: '',
@@ -40,7 +38,6 @@ const RsvpForm: React.FC = () => {
       const rsvpData = {
         firstName: values.firstName,
         lastName: values.lastName,
-        email: values.email,
         attending: values.attending === 'yes' ? 'Da' : 'Ne',
         guestCount: values.guestCount || '0',
         guestsInfo: values.guestsInfo || '',
@@ -89,8 +86,6 @@ const RsvpForm: React.FC = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <PersonalFields form={form} />
-          
-          <EmailField form={form} />
           
           <GuestFields form={form} attending={attending} guestCount={guestCount} />
           
