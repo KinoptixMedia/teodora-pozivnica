@@ -38,7 +38,7 @@ const RsvpForm: React.FC = () => {
         firstName: values.firstName,
         lastName: values.lastName,
         attending: values.attending === 'yes' ? 'Da' : 'Ne',
-        guestCount: values.guestCount || '0',
+        guestCount: values.guestCount || '1',
         guestsInfo: values.guestsInfo || '',
         message: values.message || ''
       };
