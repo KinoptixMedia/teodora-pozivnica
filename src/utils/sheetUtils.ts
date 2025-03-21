@@ -10,26 +10,24 @@ interface RsvpData {
 export const submitRsvpToGoogleSheet = async (data: RsvpData): Promise<boolean> => {
   try {
     const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw7_RMF1QjN35nNrLjtmFn5ZZovlUoPznvo_zC2kcdf/exec';
-
-    // Šaljemo podatke kao JSON
-    const response = await fetch(APPS_SCRIPT_ENDPOINT, {
+    
+    // Kreiraj proxy URL za zaobilaženje CORS-a
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    
+    const response = await fetch(proxyUrl + APPS_SCRIPT_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
       },
-      body: JSON.stringify(data),
-      mode: 'no-cors', // Dodajemo no-cors mode
+      body: JSON.stringify(data)
     });
 
-    // Provera da li je response uopšte stigao
-    if (!response.ok && response.type !== 'opaque') {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return true; // Pretpostavka da je uspešno ako nije bacen error
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     
+    return true;
   } catch (error) {
-    console.error('Greška pri slanju:', error);
-    throw new Error('Došlo je do greške pri povezivanju sa serverom');
+    console.error('Greška:', error);
+    throw error;
   }
 };
