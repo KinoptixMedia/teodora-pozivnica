@@ -14,7 +14,7 @@ const Header: React.FC = () => {
       <div className="relative inline-block">
         <Cake className="text-minnie-roseDark w-8 h-8 absolute -top-2 -left-6 animate-pulse-light" />
         <h1 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold text-minnie-black tracking-tight">
-          <span className="text-minnie-roseDark">First</span> Birthday
+          <span className="text-minnie-roseDark">Prvi</span> Rođendan i <br><span className="text-minnie-roseDark">Krštenje</span></br>
         </h1>
         <div className="h-0.5 w-14 bg-minnie-roseDark mx-auto mt-3 mb-3 rounded-full" />
       </div>
