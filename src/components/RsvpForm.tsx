@@ -74,7 +74,7 @@ const RsvpForm: React.FC = () => {
     >
       <div className="text-center mb-6">
         <h2 className="font-playfair text-2xl md:text-3xl text-minnie-black mb-1">
-          RSVP
+          Potvrda prisutnosti
         </h2>
         <div className="h-0.5 w-14 bg-minnie-roseDark mx-auto my-3 rounded-full" />
         <p className="text-minnie-black text-sm md:text-base">
