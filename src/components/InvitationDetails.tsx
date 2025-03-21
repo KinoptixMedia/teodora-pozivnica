@@ -57,7 +57,7 @@ const InvitationDetails: React.FC<InvitationDetailsProps> = ({
         variants={item} 
         className="font-playfair text-2xl md:text-3xl text-minnie-black font-bold mt-4"
       >
-        {childName} slavi <span className="text-minnie-roseDark">ONE</span> rođendan!
+        {childName} slavi <span className="text-minnie-roseDark">PRVI</span> rođendan!
       </motion.h3>
       
       <motion.p 
