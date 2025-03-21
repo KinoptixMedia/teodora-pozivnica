@@ -10,23 +10,25 @@ interface RsvpData {
 
 export const submitRsvpToGoogleSheet = async (data: RsvpData): Promise<boolean> => {
   try {
-    const SHEETY_API_ENDPOINT = 'https://api.sheety.co/590ecf813603ac69ab34ce3e0470bedc/spisakGostijuZaTeodorinoKrstenje/лист1';
-
-    const response = await fetch(SHEETY_API_ENDPOINT, {
+    // URL do tvog Google Apps Script endpointa
+    const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxfVfITYkZr4UiyD6th9GYGqz-VDYKPvGrGfX3IjkHKgt0tgU7oBUQrqu0VUcDf9a7ZuQ/exec';
+    
+    const response = await fetch(APPS_SCRIPT_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
-        // Ako je potrebna autentikacija, dodaj ovdje npr. 'Authorization': 'Bearer YOUR_API_KEY'
       },
-      // Ključ treba odgovarati imenu resursa u Sheety-ju (u ovom slučaju "лист1")
-      body: JSON.stringify({ лист1: data })
+      // Pošalji podatke kao JSON
+      body: JSON.stringify(data)
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(`Failed to submit RSVP: ${response.status} ${errorData}`);
+    const result = await response.json();
+    
+    // Provjeri rezultat i izbaci grešku ako nije "success"
+    if (result.result !== "success") {
+      throw new Error(result.error || 'Failed to submit RSVP');
     }
-
+    
     return true;
   } catch (error) {
     console.error('Error submitting RSVP:', error);
