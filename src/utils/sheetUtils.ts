@@ -9,27 +9,35 @@ interface RsvpData {
 
 export const submitRsvpToGoogleSheet = async (data: RsvpData): Promise<boolean> => {
   try {
-    const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwiibjENr8r5bqoelaAAdtfgSHGyaNl-Z778R63xZ5cdxyK-1dmghCE6YeOrRX9Pimw/exec'; // Vaš URL
+    const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbziSTLjXKlT_FecbW-1ucZTED62zqRAmvNrabZG-vRm9kCS0-h49rJoy1v6qiCcgt0K/exec';
 
     const response = await fetch(APPS_SCRIPT_ENDPOINT, {
-      method: 'POST', // OBAVEZNO navodnici!
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-      mode: 'no-cors'
+      mode: 'no-cors' // Dodajemo no-cors mode
     });
 
-    const result = await response.json();
+    // Provera da li postoji sadržaj pre parsiranja
+    const textResponse = await response.text();
+    if (!textResponse) {
+      throw new Error('Prazan odgovor od servera');
+    }
+
+    const result = JSON.parse(textResponse);
     
     if (result.result !== "success") {
-      console.error("Greška pri unosu:", result.error);
-      throw new Error(result.error || 'Failed to submit RSVP');
+      throw new Error(result.error || 'Nepoznata greška');
     }
     
     return true;
   } catch (error) {
-    console.error('Error submitting RSVP:', error);
-    return false;
+    console.error('Greška pri slanju:', {
+      error,
+      data: JSON.stringify(data)
+    });
+    throw error;
   }
 };
