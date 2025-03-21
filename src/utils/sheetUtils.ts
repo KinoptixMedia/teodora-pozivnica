@@ -1,5 +1,3 @@
-// src/utils/sheetUtils.ts
-
 interface RsvpData {
   firstName: string;
   lastName: string;
@@ -12,7 +10,7 @@ interface RsvpData {
 interface AppsScriptResponse {
   result: 'success' | 'error';
   error?: string;
-  message?: string; // Dodajemo message
+  message?: string;
 }
 
 export const submitRsvpToGoogleSheet = async (data: RsvpData): Promise<boolean> => {
@@ -37,10 +35,16 @@ export const submitRsvpToGoogleSheet = async (data: RsvpData): Promise<boolean> 
       throw new Error('Prazan odgovor od servera');
     }
 
-    const result: AppsScriptResponse = JSON.parse(textResponse);
+    let result: AppsScriptResponse;
+    try {
+      result = JSON.parse(textResponse);
+    } catch (parseError) {
+      console.error("Greška pri parsiranju JSON odgovora:", parseError);
+      throw new Error("Greška pri parsiranju JSON odgovora.");
+    }
 
     if (result.result !== 'success') {
-      throw new Error(result.error || result.message || 'Nepoznata greška'); //Dodajemo message iz odgovora
+      throw new Error(result.error || result.message || 'Nepoznata greška');
     }
 
     return true;
