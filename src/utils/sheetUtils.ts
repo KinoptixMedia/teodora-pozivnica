@@ -17,6 +17,7 @@ export const submitRsvpToGoogleSheet = async (data: RsvpData): Promise<boolean> 
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
+      mode: 'no-cors'
     });
 
     const result = await response.json();
