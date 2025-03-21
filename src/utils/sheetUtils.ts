@@ -9,25 +9,28 @@ interface RsvpData {
 
 export const submitRsvpToGoogleSheet = async (data: RsvpData): Promise<boolean> => {
   try {
-    const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw7_RMF1QjN35nNrLjtmFn5ZZovlUoPznvo_zC2kcdf/exec';
+    // Koristi tvoj Google Apps Script URL
+    const APPS_SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxz-igjjX8Y14W2kXk7ci9Rl3hOaQbirwOS0YWFRHs5aV2ttsSVbT1uvdwDUpvc8GC78w/exec';
     
-    // Kreiraj proxy URL za zaobilaženje CORS-a
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    
-    const response = await fetch(proxyUrl + APPS_SCRIPT_ENDPOINT, {
+    const response = await fetch(APPS_SCRIPT_ENDPOINT, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest'
+        'Content-Type': 'application/json'
       },
+      // Podaci se šalju kao JSON
       body: JSON.stringify(data)
     });
 
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const result = await response.json();
+    
+    if (result.result !== "success") {
+      console.error("Greška pri unosu:", result.error);
+      throw new Error(result.error || 'Failed to submit RSVP');
+    }
     
     return true;
   } catch (error) {
-    console.error('Greška:', error);
-    throw error;
+    console.error('Error submitting RSVP:', error);
+    return false;
   }
 };
