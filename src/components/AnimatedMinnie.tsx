@@ -46,16 +46,19 @@ const AnimatedMinnie: React.FC<AnimatedMinnieProps> = ({
             </div>
           </div>
           
-          {/* Bow - made larger */}
+          {/* Bow - adjusted to be smaller and more proportional */}
           <motion.div 
             animate={{ rotate: [-6, 6, -5] }}
             transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
             className="absolute -top-4 left-1/2 transform -translate-x-1/2"
           >
             <div className="relative">
-              <div className="absolute w-20 h-20 md:w-24 md:h-24 bg-minnie-rose transform rotate-45 rounded-lg -left-14 -top-8"></div>
-              <div className="absolute w-20 h-20 md:w-24 md:h-24 bg-minnie-rose transform rotate-45 rounded-lg left-6 -top-8"></div>
-              <div className="absolute w-12 h-12 md:w-14 md:h-14 bg-minnie-roseDark rounded-full left-1/2 transform -translate-x-1/2 top-1/2 -translate-y-1/2"></div>
+              {/* Left bow part - smaller */}
+              <div className="absolute w-16 h-16 md:w-18 md:h-18 bg-minnie-rose transform rotate-45 rounded-lg -left-12 -top-6"></div>
+              {/* Right bow part - smaller */}
+              <div className="absolute w-16 h-16 md:w-18 md:h-18 bg-minnie-rose transform rotate-45 rounded-lg left-4 -top-6"></div>
+              {/* Center circle - smaller */}
+              <div className="absolute w-10 h-10 md:w-12 md:h-12 bg-minnie-roseDark rounded-full left-1/2 transform -translate-x-1/2 top-1/2 -translate-y-1/2"></div>
             </div>
           </motion.div>
         </div>
