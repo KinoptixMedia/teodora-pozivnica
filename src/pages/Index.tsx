@@ -8,7 +8,7 @@ import RsvpForm from '@/components/RsvpForm';
 import AnimatedMinnie from '@/components/AnimatedMinnie';
 
 // Set this to your actual event date
-const eventDate = new Date('2025-05-10T13:00:00');
+const eventDate = new Date('2025-05-10T15:00:00');
 const childName = "Teodora";
 const location = "Živkin restoran";
 const address = "Maršala Tita 12, Dobanovci";
