@@ -36,7 +36,7 @@ const Index = () => {
         <div className="flex flex-col items-center my-8">
           {/* Larger Minnie animation with image inside */}
           <AnimatedMinnie 
-            childImage="/placeholder.svg" 
+            childImage="/teodora-1.png" 
             childName={childName} 
             className="mt-4" 
           />
