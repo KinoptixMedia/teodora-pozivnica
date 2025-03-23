@@ -12,7 +12,7 @@ const Header: React.FC = () => {
       className="w-full mx-auto text-center py-6 mb-6"
     >
       <div className="relative inline-block">
-        <Cake className="text-minnie-roseDark w-8 h-8 absolute -top-2 -left-6 animate-pulse-light" />
+        <!-- <Cake className="text-minnie-roseDark w-8 h-8 absolute -top-2 -left-6 animate-pulse-light" /> -->
         <h1 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold text-minnie-black tracking-tight">
           <span className="text-minnie-roseDark">Prvi</span> Rođendan i krštenje
         </h1>
