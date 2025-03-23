@@ -33,18 +33,13 @@ const Index = () => {
         
         <Header />
         
-        <div className="flex flex-col items-center my-6">
-          {/* Placeholder image centered above Minnie animation */}
-          <div className="w-full flex justify-center mb-4">
-            <img 
-              src="/placeholder.svg"
-              alt="Teodora"
-              className="w-48 h-48 object-cover rounded-full border-4 border-minnie-roseDark shadow-lg"
-            />
-          </div>
-          
-          {/* Larger Minnie animation */}
-          <AnimatedMinnie className="mt-4" />
+        <div className="flex flex-col items-center my-8">
+          {/* Larger Minnie animation with image inside */}
+          <AnimatedMinnie 
+            childImage="/placeholder.svg" 
+            childName={childName} 
+            className="mt-4" 
+          />
         </div>
         
         <InvitationDetails 
