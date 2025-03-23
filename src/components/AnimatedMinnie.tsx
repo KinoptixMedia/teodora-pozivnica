@@ -17,8 +17,8 @@ const AnimatedMinnie: React.FC<AnimatedMinnieProps> = ({
     <div className={`relative ${className}`}>
       <motion.div 
         animate={{ 
-          rotate: [0, 5, 0, -5, 0],
-          y: [0, -5, 0, -3, 0]
+          rotate: [0, 9, 0, -9, 0],
+          y: [0, -9, 0, -5, 0]
         }}
         transition={{ 
           duration: 6, 
