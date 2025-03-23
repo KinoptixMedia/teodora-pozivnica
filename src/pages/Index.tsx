@@ -34,9 +34,9 @@ const Index = () => {
         <Header />
         
         <div className="flex flex-col items-center my-8">
-          {/* Larger Minnie animation with image inside */}
+          {/* Minnie animation with the new uploaded image inside */}
           <AnimatedMinnie 
-            childImage="/teodora-1.png" 
+            childImage="/lovable-uploads/c650aeb6-1779-4a8a-bfb2-362734ae36bc.png" 
             childName={childName} 
             className="mt-4" 
           />
