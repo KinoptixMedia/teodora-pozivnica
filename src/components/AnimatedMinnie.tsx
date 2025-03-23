@@ -48,7 +48,7 @@ const AnimatedMinnie: React.FC<AnimatedMinnieProps> = ({
           
           {/* Bow - made larger */}
           <motion.div 
-            animate={{ rotate: [-3, 3, -3] }}
+            animate={{ rotate: [-6, 6, -5] }}
             transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
             className="absolute -top-4 left-1/2 transform -translate-x-1/2"
           >
