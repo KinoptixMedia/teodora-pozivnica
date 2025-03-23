@@ -13,7 +13,7 @@ const Header: React.FC = () => {
     >
       <div className="relative inline-block">
         <h1 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold text-minnie-black tracking-tight">
-           Krštenje i <span className="text-minnie-roseDark"prvi</span> rođendan
+           Krštenje i <span className="text-minnie-roseDark">prvi</span> rođendan
         </h1>
         <div className="h-0.5 w-14 bg-minnie-roseDark mx-auto mt-3 mb-3 rounded-full" />
       </div>
