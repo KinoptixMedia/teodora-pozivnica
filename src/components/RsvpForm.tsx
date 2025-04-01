@@ -96,7 +96,7 @@ const RsvpForm: React.FC = () => {
               disabled={isSubmitting}
               className="bg-minnie-roseDark hover:bg-minnie-rose text-white font-medium px-8 py-2.5 rounded-full transition-all duration-300 hover:shadow-md"
             >
-              {isSubmitting ? 'Slanje...' : 'Pošalji RSVP'}
+              {isSubmitting ? 'Slanje...' : 'Pošalji potvrdu'}
             </Button>
           </div>
         </form>
